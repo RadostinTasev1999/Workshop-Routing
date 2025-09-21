@@ -1,10 +1,23 @@
 import './App.css'
+import Home from './components/home/Home'
+import Header from './components/Header/header'
+import {Routes, Route} from 'react-router'
 
 function App() {
  
   return (
     <>
-      <h1>Games play</h1>
+      <div id="box">
+        <Header />
+
+    <main id="main-content">
+      <Routes>
+        <Route index element={<Home />}/>
+      </Routes>
+      <Home />
+    </main>
+
+      </div>
     </>
   )
 }
