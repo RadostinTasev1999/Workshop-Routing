@@ -1,17 +1,15 @@
+import { request } from "../utils/requester";
+
 const baseUrl = 'http://localhost:3030/jsonstore/games'
 
+
 export default {
-    async create(gameData){
-       const response = await fetch(baseUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(gameData)
-       })
+     create(gameData){
+       const createGame = request('POST',baseUrl,gameData)
 
-       const result = await response.json();
-
-       return result;
+       return createGame
+    },
+    async getAll(){
+        return request('GET',baseUrl)
     }
 }
