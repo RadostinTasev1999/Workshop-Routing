@@ -1,7 +1,12 @@
 export default function Login(){
+
+    const loginAction = async(formData) => {
+        console.log('Form data is:', formData)
+    }
+
     return (
         <section id="login-page" className="auth">
-            <form id="login">
+            <form id="login" action={loginAction}>
 
                 <div className="container">
                     <div className="brand-logo"></div>
