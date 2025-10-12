@@ -1,11 +1,9 @@
-export const request = async (method,url,data) => {
+export const request = async (method,url,data, options = {}) => {
 
-    let options = {};
+    // let options = {};
 
     if (method !== 'GET') {
-        options = {
-            method
-        };
+        options.method = method;
     }
 
     if (data) {
@@ -20,7 +18,7 @@ export const request = async (method,url,data) => {
 
      
     const response = await fetch(url,options)
-    console.log('Response in requester is:', response)
+    // console.log('Response in requester is:', response)
     const result = await response.json()
 
     return result;
