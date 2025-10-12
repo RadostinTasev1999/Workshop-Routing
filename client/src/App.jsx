@@ -9,14 +9,16 @@ import Login from './components/login/Login'
 import Register from './components/register/Register'
 import GameDetails from './components/details/GameDetails'
 import EditGame from './components/edit/EditGame'
+import UserProvider from './providers/UserProvider'
 
 function App() {
  
   return (
     <>
+    
       <div id="box">
         <Header />
-
+    <UserProvider>
     <main id="main-content">
       <Routes>
         <Route index element={<Home />}/>
@@ -28,7 +30,7 @@ function App() {
         <Route path='/register' element={<Register />} />
       </Routes>
     </main>
-
+    </UserProvider>
       </div>
     </>
   )
