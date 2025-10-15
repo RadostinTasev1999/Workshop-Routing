@@ -1,9 +1,11 @@
 import { useActionState, useContext } from "react"
 import { useRegister } from "../../api/authApi"
 import { UserContext } from "../../contexts/UserContext"
+import {useNavigate} from "react-router"
 
 export default function Register(){
 
+    const navigate = useNavigate()
     const { register } = useRegister()
     const { userLoginHandler } = useContext(UserContext)
 
@@ -14,10 +16,13 @@ export default function Register(){
         if (password !== rePassword) {
             return window.alert('Passwords do not match!')
         }
-        const registeredUser = await register(email,password)
-        userLoginHandler(registeredUser)
+        const authData = await register(email,password)
+
+        userLoginHandler(authData)
         
-        return registeredUser
+        navigate('/games')
+
+        return authData
     }
 
     const [state, formAction, isPending] = useActionState(registerHandler, { 'email': '', 'password': '', 'confirm-password': ''})
