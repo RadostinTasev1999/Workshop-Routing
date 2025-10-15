@@ -2,12 +2,13 @@ import { useActionState, useContext } from 'react';
 import { useLogin } from '../../api/authApi'
 //import { useNavigate } from 'react-router';
 import { UserContext } from '../../contexts/UserContext';
+import { useNavigate } from 'react-router';
 
 
 export default function Login(){
 
 
-   //const navigate = useNavigate();
+   const navigate = useNavigate()
 
    // Every time Login component renders, useLogin() hook will be called
    const { login } = useLogin()
@@ -27,7 +28,7 @@ export default function Login(){
         console.log('LoggedUser', loggedUser)
 
 
-        //navigate('/games')
+        navigate('/')
 
         return loggedUser
     }
