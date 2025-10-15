@@ -10,18 +10,29 @@ export const request = async (method,url,data, options = {}) => {
         options = {
             ...options,
             headers: {
+                ...options.headers,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         }
     }
 
-     
-    const response = await fetch(url,options)
-    // console.log('Response in requester is:', response)
-    const result = await response.json()
+    
+        const response = await fetch(url,options)
+        const responseContentType = response.headers.get('Content-Type')
+        
+        if (!responseContentType) {
+            return;
+        }
 
-    return result;
+    // console.log('Response in requester is:', response)
+         const result = await response.json()
+
+         return result;
+    
+
+     
+    
 }
 
 export default {
