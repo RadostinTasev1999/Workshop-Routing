@@ -10,6 +10,7 @@ import Register from './components/register/Register'
 import GameDetails from './components/details/GameDetails'
 import EditGame from './components/edit/EditGame'
 import UserProvider from './providers/UserProvider'
+import Logout from './components/logout/Logout'
 
 function App() {
  
@@ -28,6 +29,7 @@ function App() {
         <Route path='/games/create' element={<Create />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/logout' element={<Logout />} />
       </Routes>
     </main>
     </UserProvider>
