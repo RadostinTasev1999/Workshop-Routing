@@ -12,7 +12,7 @@ export default function EditGame(){
     const { game } = useGameId(gameId)
 
     const editAction = async(formData) => {
-        const { title, category, maxLevel, imageUrl } = Object.fromEntries(formData)
+        const { title, category, maxLevel, imageUrl, summary} = Object.fromEntries(formData)
 
         console.log('Edit form values are:', title, category, maxLevel)
 
@@ -22,7 +22,8 @@ export default function EditGame(){
             title,
             category,
             maxLevel,
-            imageUrl
+            imageUrl,
+            summary
         }
 
         await edit(gameId,payload)
