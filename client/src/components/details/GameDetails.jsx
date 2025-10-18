@@ -1,21 +1,24 @@
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 // import { useEffect } from "react"
 // import gameService from "../../services/gameService"
 // import { useState } from "react"
 import { Link } from "react-router"
-import { useGameId } from "../../api/gameApi"
+import { useDeleteGame, useGameId } from "../../api/gameApi"
 
 
 export default function GameDetails(){
 
     let params = useParams()
+    const navigate = useNavigate()
     const gameId = params.gameId
     const { game } = useGameId(gameId)
+    const { deleteGame } = useDeleteGame()
 
     console.log('Game is:', game)
 
-    const onDelete = () => {
-        console.log('Delete game')
+    const onDelete = async () => {
+        await deleteGame(gameId)
+        navigate('/games')
     }
 
     return (
