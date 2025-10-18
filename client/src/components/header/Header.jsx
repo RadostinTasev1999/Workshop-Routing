@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts/UserContext'
 export default function Header(){
 
     const { email } = useContext(UserContext)
-    
+   
     return (
         <header>
             {/* <!-- Navigation --> */}
