@@ -1,24 +1,23 @@
-import { useEffect } from "react"
-import gameService from "../../api/gameService"
+// import { useEffect } from "react"
+// import gameService from "../../services/gameService";
 import { Link } from "react-router";
- import { useState } from "react";
+import { useGamesCatalog } from "../../api/gameApi";
+  
+// import { useGamesCatalog } from "../../api/gameApi";
 
 export default function Catalog(){
 
-      const [games,setGames] = useState([]);
-
-    useEffect(() => {
+  const { games } = useGamesCatalog()
       
-         gameService.getAll()
-             .then(result => setGames(result) )
-
-    },[])
 
     return (
         <>
         <section id="catalog-page">
             <h1>All Games</h1>
-            {games.length !== 0 && games.map((game) => (
+            {games.length !== 0 
+                    ?
+            (
+                games.map((game) => (
                 <div className="allGames">
                 <div className="allGames-info">
                     <img src={game.imageUrl}/>
@@ -28,10 +27,13 @@ export default function Catalog(){
                 </div>
 
             </div>
-            ))}
-            
-            {/* <!-- Display paragraph: If there is no games  --> */}
-            <h3 className="no-articles">No articles yet</h3>
+            ))
+            )   
+                    :
+            (
+                <h3 className="no-articles">No articles yet</h3>
+            )
+            }
         </section>
         </>
          
