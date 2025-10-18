@@ -7,9 +7,8 @@ import { useGamesCatalog } from "../../api/gameApi";
 
 export default function Catalog(){
 
-  const { games } = useGamesCatalog()
-      
-
+    const { games } = useGamesCatalog()
+    
     return (
         <>
         <section id="catalog-page">
@@ -31,7 +30,7 @@ export default function Catalog(){
             )   
                     :
             (
-                <h3 className="no-articles">No articles yet</h3>
+                <h3 className="no-articles">No articles yet!</h3>
             )
             }
         </section>
