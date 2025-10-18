@@ -1,21 +1,18 @@
 import { useParams } from "react-router"
-import { useEffect } from "react"
-import gameService from "../../api/gameService"
-import { useState } from "react"
+// import { useEffect } from "react"
+// import gameService from "../../services/gameService"
+// import { useState } from "react"
 import { Link } from "react-router"
+import { useGameId } from "../../api/gameApi"
 
 
 export default function GameDetails(){
 
     let params = useParams()
     const gameId = params.gameId
-    console.log('Game ID is:', gameId)
-    const [game,setGame] = useState({})
+    const { game } = useGameId(gameId)
 
-    useEffect(() => {
-        gameService.gameDetails(gameId)
-            .then((game) => setGame(game))
-    },[gameId])
+    console.log('Game is:', game)
 
     const onDelete = () => {
         console.log('Delete game')
