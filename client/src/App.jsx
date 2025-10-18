@@ -11,15 +11,16 @@ import GameDetails from './components/details/GameDetails'
 import EditGame from './components/edit/EditGame'
 import UserProvider from './providers/UserProvider'
 import Logout from './components/logout/Logout'
+// import { useContext } from 'react'
+import { UserContext } from './contexts/UserContext'
 
 function App() {
- 
+
   return (
     <>
-    
-      <div id="box">
-        <Header />
+      <div id="box"> 
     <UserProvider>
+      <Header />
     <main id="main-content">
       <Routes>
         <Route index element={<Home />}/>
