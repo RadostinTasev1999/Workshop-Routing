@@ -71,14 +71,29 @@ export const useCreateGame = () => {
 export const useGamesCatalog = () => {
 
     const [games, setGames] = useState([])
+    
 
     useEffect(() => {
-        request.get(baseUrl)
-            .then((games) => setGames(games))
+      request.get(`${baseUrl}`)
+            .then(
+                (response) => {
+                    if (response.code === 404) {
+                        throw new Error(response.message)
+                   }else{
+                    setGames(response)
+                   }
+
+                }
+                   
+            )
+            .catch((err) => {
+                console.error('Error fetching resources:',err)
+                
+            })
     },[])
 
     return {
-        games
+        games    
     }
 
 }
@@ -88,7 +103,7 @@ export const useGameId = (gameId) => {
     const [game,setGame] = useState({})
 
     useEffect(() => {
-        request.get(`${baseUrl}/${gameId}`)
+        request.get(`${ baseUrl}/${gameId}`)
             .then((result) => setGame(result))
     },[gameId])
 
@@ -109,4 +124,18 @@ export const useEditGame = () => {
     return {
         edit
     }
+}
+
+export const useDeleteGame = () => {
+
+    const { options } = useAuth()
+
+    const deleteGame = (gameId) => {
+        return request.delete(`${baseUrl}/${gameId}`,null,options)
+    }
+
+    return {
+        deleteGame
+    }
+
 }
