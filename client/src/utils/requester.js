@@ -40,5 +40,6 @@ export default {
     //get:(params) => request('GET', ...params),
     post: request.bind(null,'POST'),
     put: request.bind(null,'PUT'),
-    delete: request.bind(null,'DELETE')
+    delete: request.bind(null,'DELETE'),
+    baseRequest: request
 }
