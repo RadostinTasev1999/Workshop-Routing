@@ -1,34 +1,39 @@
 import { useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
-import { request } from "../utils/requester"
+import request from "../utils/requester"
 
-export default function useAuth(){
+export default function useAuth() {
 
-    const { accessToken } = useContext(UserContext)
+    const authData = useContext(UserContext);
 
     const options = {
-        headers: {
-            'X-Authorization': accessToken
+        headers:{
+            'X-Authorization': authData.accessToken
         }
     }
 
-    const requestWrapper = (method, url, data, options = {}) => {
+    const requestWrapper = (method,url, data, options = {}) => {
 
-        const optionsWrapper = {
+        const optionWrapper = {
             ...options,
-            headers: {
-                'X-Authorization': accessToken,
-                ...options.headers
-            }
+         headers:{
+            'X-Authorization': authData.accessToken,
+            ...options.headers
         }
-
-    return request.baseRequest(method,url, data, optionsWrapper)
-
-    }
+            }
+            
+       return request.baseRequest(method,url,data,optionWrapper)
+    } 
 
     return {
-        accessToken,
+        ...authData,
         options,
-        request: requestWrapper
+        request: {
+            get: requestWrapper.bind(null,'GET'),
+            put: requestWrapper.bind(null,'PUT'),
+            post: requestWrapper.bind(null,'POST'),
+            delete: requestWrapper.bind(null,'DELETE')
+        }
     }
+
 }
