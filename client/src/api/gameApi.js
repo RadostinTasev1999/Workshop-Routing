@@ -47,20 +47,14 @@ const baseUrl = 'http://localhost:3030/data/games'
 
 export const useCreateGame = () => {
 
-    // const { accessToken } = useContext(UserContext)
+    const { request } = useAuth()
 
-    // const options = {
-    //     header: {
-    //        'X-Authorization': accessToken
-    //     }
-    // }
+    // const { options } = useAuth()
 
-    const { options } = useAuth()
-
-    console.log('Option in useCreateGame are:', options)
+    // console.log('Option in useCreateGame are:', options)
    
     const create = (gameData) => {
-        return request.post(baseUrl,gameData, options)
+        return request.post(baseUrl,gameData)
     }
 
     return {
@@ -115,10 +109,10 @@ export const useGameId = (gameId) => {
 
 export const useEditGame = () => {
 
-    const { options } = useAuth()
+    const { request } = useAuth()
 
     const edit = (gameId,payload) => {
-        return request.put(`${baseUrl}/${gameId}`,payload,options)
+        return request.put(`${baseUrl}/${gameId}`,payload)
     }
 
     return {
@@ -128,10 +122,10 @@ export const useEditGame = () => {
 
 export const useDeleteGame = () => {
 
-    const { options } = useAuth()
+    const { request } = useAuth()
 
     const deleteGame = (gameId) => {
-        return request.delete(`${baseUrl}/${gameId}`,null,options)
+        return request.delete(`${baseUrl}/${gameId}`,null)
     }
 
     return {
