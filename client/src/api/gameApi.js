@@ -133,3 +133,33 @@ export const useDeleteGame = () => {
     }
 
 }
+
+export const useLatestGames = () => {
+
+    const [latestGames, setLatestGames] = useState([]);
+
+    const PAGESIZE = 3;
+
+   useEffect(() => {
+    const searchParams = new URLSearchParams({
+        sortBy: '_createdOn desc',
+        pageSize: PAGESIZE,
+        select: '_id,imageUrl,title' // URL-encoded string of comma-separated property names
+        // The returned entries will only have the selected properties, which may greatly reduce network traffic.
+    });
+        request.get(`${baseUrl}?${searchParams.toString()}`)
+            .then((response) => {
+                if (response.code === 404) {
+                    throw new Error(response.message)
+                }
+                setLatestGames(response)
+            })
+            .catch((err) => {
+                console.error('On Rejection function called', err.message)
+            })
+   },[]);
+
+    return {
+        latestGames
+    }
+}
