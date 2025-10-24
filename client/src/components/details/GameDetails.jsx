@@ -1,25 +1,32 @@
+import GameComments from "../comments/GameComments"
 import { useNavigate, useParams } from "react-router"
 // import { useEffect } from "react"
 // import gameService from "../../services/gameService"
 // import { useState } from "react"
 import { Link } from "react-router"
 import { useDeleteGame, useGameId } from "../../api/gameApi"
+import useAuth from "../../hooks/useAuth"
+import { useComments } from "../../api/commentApi"
 
 
 export default function GameDetails(){
 
     let params = useParams()
+    const { _id: userId } = useAuth()
     const navigate = useNavigate()
     const gameId = params.gameId
     const { game } = useGameId(gameId)
     const { deleteGame } = useDeleteGame()
+    const { comments } = useComments(gameId)
 
-    console.log('Game is:', game)
+    console.log('Comments are:', comments)
 
     const onDelete = async () => {
         await deleteGame(gameId)
         navigate('/games')
     }
+
+    const isOwner = userId === game._ownerId    
 
     return (
         <section id="game-details">
@@ -50,20 +57,18 @@ export default function GameDetails(){
                     </ul>
                     <p className="no-comment">No comments.</p>
                 </div>
-
-                <div className="buttons">
-                    <Link to={`/games/${game._id}/edit`}  className="button">Edit</Link>
-                    <a href="#" onClick={onDelete}  className="button">Delete</a>
-                </div>
+            {
+                isOwner && (
+                        <div className="buttons">
+                            <Link to={`/games/${game._id}/edit`} className="button">Edit</Link>
+                            <a href="#" onClick={onDelete} className="button">Delete</a>
+                        </div>
+                )
+            }
+                
             </div>
 
-            <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form">
-                    <textarea name="comment" placeholder="Comment......"></textarea>
-                    <input className="btn submit" type="submit" value="Add Comment" />
-                </form>
-            </article>
+            <GameComments gameId={gameId}/>
 
         </section>
     )
