@@ -1,24 +1,24 @@
-import { UserContext } from "../contexts/UserContext";
-import usePersistedState from "../hooks/usePersistedState";
+import usePersistedState from "../hooks/usePersistedState"
+import { UserContext } from "../contexts/UserContext"
 
-export default function UserProvider({
+export function UserProvider({
     children
 }) {
-    const [authData, setAuthData] = usePersistedState('auth',{})
 
-    const userLoginHandler = (resultData) => {
-        console.log('Result data is:', resultData)
-        setAuthData(resultData);
-    };
+  const [authData, setAuthData] = usePersistedState({})
 
-    const userLogoutHandler = () => {
-        setAuthData({})
-    };
+  const userLoginHandler = (resultData) => {
+    setAuthData(resultData)
+  }
+
+  const userLogoutHandler = () => {
+    setAuthData({})
+  }
 
     return (
-        <UserContext.Provider value={{...authData, userLoginHandler,userLogoutHandler}}>
+        <UserContext.Provider value={{...authData, userLoginHandler, userLogoutHandler}}>
             {children}
         </UserContext.Provider>
-    )
-
+    );
 }
+
