@@ -1,37 +1,27 @@
 import { useState } from "react";
 
-export default function usePersistedState(stateKey, initialState){
+export default function usePersistedState(initialState){
     const [state, setState] = useState(() => {
-        const persistedState = localStorage.getItem(stateKey);
+        const persistedState = localStorage.getItem('auth')
+
         if (!persistedState) {
-             return typeof initialState === 'function' ? initialState() : initialState;
+            return initialState
         }
 
-        const persistedStateData = JSON.parse(persistedState);
+        const persistedStateData = JSON.parse(persistedState)
 
-        return persistedStateData 
-        /*
-        If we have a key with name 'auth' in local storage, we will
-        retrive this key's value and parse it to an object
-        The parsed values from key 'auth' retrieved from local storage,
-        will be the initial state value.
-        */
+        return persistedStateData
     });
 
-    const setPersistedState = (input) => {
-
-        const data = typeof input === 'function' ? input(state) : (input);
-
-        const persistedData = JSON.stringify(data); // convert the value to JSON string
-
-        localStorage.setItem(stateKey, persistedData); // Add key to the given storage object
-
-        setState(data)
-    };
+    const setPersistedState = (data) => {
+        // TODO: update local storage
+        const persistedData = JSON.stringify(data) // convert data into JSON string
+        localStorage.setItem('auth', persistedData) // save data in localStorage under key 'auth'
+        setState(data) // update the state property
+    }
 
     return [
         state,
         setPersistedState
     ]
-
 }
