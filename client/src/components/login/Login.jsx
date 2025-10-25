@@ -1,8 +1,9 @@
-import { useActionState, useContext } from 'react';
+import { useActionState } from 'react';
 import { useLogin } from '../../api/authApi'
 //import { useNavigate } from 'react-router';
-import { UserContext } from '../../contexts/UserContext';
+//import { UserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router';
+import {useUserContext} from '../../hooks/useUserContext';
 
 
 export default function Login(){
@@ -12,7 +13,7 @@ export default function Login(){
 
    // Every time Login component renders, useLogin() hook will be called
    const { login } = useLogin()
-   const { userLoginHandler } = useContext(UserContext)
+   const { userLoginHandler } = useUserContext()
     
     const loginHandler = async(prevState,formData) => {
         /*
