@@ -1,10 +1,10 @@
-import { useContext } from "react"
+import { useUserContext } from "./useUserContext";
 import { UserContext } from "../contexts/UserContext"
 import request from "../utils/requester"
 
 export default function useAuth() {
 
-    const authData = useContext(UserContext);
+    const authData = useUserContext(UserContext);
 
     const options = {
         headers:{
@@ -27,6 +27,7 @@ export default function useAuth() {
 
     return {
         ...authData,
+        isAuthenticated: !!authData.accessToken,
         options,
         request: {
             get: requestWrapper.bind(null,'GET'),
