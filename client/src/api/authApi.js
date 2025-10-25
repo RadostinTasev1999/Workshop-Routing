@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import request from '../utils/requester'
 import { useRef } from 'react';
-import { UserContext } from '../contexts/UserContext';
-import { useContext } from 'react';
+//import { UserContext } from '../contexts/UserContext';
+import {useUserContext} from '../hooks/useUserContext';
 
 const baseUrl = 'http://localhost:3030/users'
 
@@ -55,8 +55,8 @@ export const useRegister = () => {
 
 export const useLogout = () => {
 
-   const { accessToken } = useContext(UserContext);
-   const { userLogoutHandler } = useContext(UserContext)
+   const { accessToken } = useUserContext();
+   const { userLogoutHandler } = useUserContext()
 
    useEffect(() => {
 
