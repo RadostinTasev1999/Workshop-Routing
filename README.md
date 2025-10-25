@@ -1,2 +1,1 @@
-# Workshop Routing
-SoftUni-Workshop Routing
+# SoftUni GamesPlay app
