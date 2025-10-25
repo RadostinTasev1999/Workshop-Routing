@@ -1,16 +1,14 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
+// import usePersistedState from "../hooks/usePersistedState";
 
 export const UserContext = createContext({
-    _id:'',
-    email:'',
-    username:'',
+    _id: '',
+    email: '',
+    username: '',
     accessToken: '',
     userLoginHandler: () => null,
     userLogoutHandler: () => null
 });
 
-export function useUserContext(){
-    const data = useContext(UserContext)
 
-    return data;
-}
+
