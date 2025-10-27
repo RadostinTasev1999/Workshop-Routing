@@ -15,7 +15,7 @@ export default function GameComments(
         const { comment } = Object.fromEntries(formData)
 
         await createComment(comment,gameId)
-
+ 
         navigate(`/games/${gameId}`)
         
     }
