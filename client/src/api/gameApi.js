@@ -94,12 +94,13 @@ export const useGamesCatalog = () => {
 
 export const useGameId = (gameId) => {
 
+    const { request } = useAuth()
     const [game,setGame] = useState({})
 
     useEffect(() => {
         request.get(`${ baseUrl}/${gameId}`)
             .then((result) => setGame(result))
-    },[gameId])
+    },[gameId,request])
 
     return {
         game
