@@ -33,7 +33,7 @@ export const useComments = (gameId) => {
         
         request.get(`${baseUrl}?${searchParams.toString()}`)
             .then((response) => setComments(response))
-    },[request,gameId])
+    },[gameId, request])
     
     return {
         comments
@@ -43,9 +43,16 @@ export const useComments = (gameId) => {
 export const useCreateComment = () => {
 
     const { request } = useAuth()
+    // const { userId } = useAuth()
 
     const createComment = (comment, gameId) => {
-        return request.post(`${baseUrl}/${gameId}`,{comment})
+
+        const payload = {
+            comment,
+            gameId
+        }
+
+        return request.post(`${baseUrl}/${gameId}`,payload)
     }
 
     return {
