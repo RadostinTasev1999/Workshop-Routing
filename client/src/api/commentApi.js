@@ -1,42 +1,50 @@
-import { useEffect } from "react"
+import { useEffect, useReducer } from "react"
 import useAuth from "../hooks/useAuth"
 // import request from "../utils/requester"
 import { useState } from "react"
+import request from '../utils/requester'
 
-const baseUrl = 'http://localhost:3030/jsonstore/comments'
+const baseUrl = 'http://localhost:3030/data/comments'
 
-// export default {
-//     async getAll(gameId) {
-//         const comments = await request.get(baseUrl)
+function commentsReducer(state, action){
 
-//         const gameComments = Object.values(comments) // Returns an array of values of the enumerable own properties of an object
-//         const filteredComments = gameComments.filter((comment) => comment.gameId === gameId)
-
-//         return filteredComments
-//     },
-
-//     create(email,gameId,comment){
-
-//         return request.post(baseUrl, {email, gameId, comment })
-//     }
-// }
+    switch (action.type) {
+        case 'GET_ALL':
+            return action.payload
+        
+        default:
+            return state
+    }
+   
+}
 
 
 export const useComments = (gameId) => {
-    const { request } = useAuth()
-    const [comments, setComments] = useState({})
+    //const { request } = useAuth()
+    // const [gameComments, setComments] = useState([])
+
+    const [comments, dispatch] = useReducer(commentsReducer,[]) // reducer is a function which knows how to update the state
+
+    const { accessToken } = useAuth()
 
     useEffect(() => {
         const searchParams = new URLSearchParams({
             where: `gameId="${gameId}"`
         })
+
+        const options = {
+            headers: {
+                'X-Authorization': accessToken
+            }
+        }
         
-        request.get(`${baseUrl}?${searchParams.toString()}`)
-            .then((response) => setComments(response))
-    },[gameId, request])
+        request.get(`${baseUrl}?${searchParams.toString()}`,null,options)
+            .then((response) => dispatch({type: 'GET_ALL', payload: response}))
+    },[gameId, accessToken])
     
     return {
-        comments
+        comments,
+        addComment: dispatch
     }
 }
 
@@ -52,7 +60,7 @@ export const useCreateComment = () => {
             gameId
         }
 
-        return request.post(`${baseUrl}/${gameId}`,payload)
+        return request.post(baseUrl,payload)
     }
 
     return {
