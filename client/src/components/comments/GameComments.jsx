@@ -14,9 +14,9 @@ export default function GameComments(
                               gameComments.length !== 0
                                     ?
                             (
-                                gameComments.map(({_id,comment,_ownerId,pending}) => (
+                                gameComments.map(({_id,comment,pending,author}) => (
                                     <li key={_id} className={`comment ${pending ? styles['comment-pending'] : ''}` .trim()}>
-                                        <p>{_ownerId}: {comment}</p>
+                                        <p>{author.email}: {comment}</p>
                                     </li>
                                 ))
                             )
