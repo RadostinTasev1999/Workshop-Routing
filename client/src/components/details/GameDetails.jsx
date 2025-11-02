@@ -8,7 +8,7 @@ import { Link } from "react-router"
 import { useDeleteGame, useGameId } from "../../api/gameApi"
 import useAuth from "../../hooks/useAuth"
 import { useComments } from "../../api/commentApi"
-import { useOptimistic, useState } from "react"
+//import { useOptimistic } from "react"
 import { useCreateComment } from "../../api/commentApi"
 import { v4 as uuid } from 'uuid'
 
@@ -22,34 +22,18 @@ export default function GameDetails(){
     const gameId = params.gameId
     const { game } = useGameId(gameId)
     const { deleteGame } = useDeleteGame()
-    const { gameComments } = useComments(gameId) // current game comments on server
+    const { gameComments, addComment } = useComments(gameId) // current game comments on server
 
     const { createComment } = useCreateComment()
-    const [updatedComments, setUpdatedComments] = useState(gameComments)
-
-    const [optimisticComments, setOptimisticComments] = useOptimistic(gameComments) // on mount initial state will be empty array
     
-
-
      const onCreateComment = async(formData) => {
 
         const comment = formData.get('comment')
-        // optimistic update
-        const newOptimisticComment = {
-            gameId,
-            comment,
-            _id: uuid(),
-            pending: true
-        }
-
-        setOptimisticComments(optmisticState => [...optmisticState, newOptimisticComment]) // update state with optimisticComment (this will trigger re-render)
-        // Server update
+        
         const newComment = await createComment(comment,gameId) // Send post request to server with body {comment, gameId}
 
-        // Local state update
-        setUpdatedComments(state => [...state, newComment]) // update updatedComments state with repsonse object from server (this will trigger re-render)
-       console.log('Updated comments are:', updatedComments)
-       
+        addComment(newComment)
+        
         navigate(`/games/${gameId}`) // trigger navigation to Details compononent (this will trigger re-render)
     }
 
@@ -76,7 +60,7 @@ export default function GameDetails(){
                     {game.summary}
                 </p>
 
-                <GameComments gameComments={optimisticComments} />
+                <GameComments gameComments={gameComments} />
                 
             {
                 isOwner && (
