@@ -55,19 +55,31 @@ export const useComments = (gameId) => {
 
 export const useCreateComment = () => {
 
-    const { request,email } = useAuth()
+    const { request } = useAuth()
 
     const createComment = (comment, gameId) => {
 
         const payload = {
             comment,
-            gameId,
-            author:{
-                email
-            }
+            gameId   
         }
 
-        return request.post(baseUrl,payload)
+        const searchParams = new URLSearchParams({
+            load: 'author=_ownerId:users'
+        });
+
+        /*propName=id:collection
+
+          propName - name of the property which will receive the matched
+          object from the related collection.
+
+          id - the name of the property from the current collection, which holds the foreigh key 
+          _id.
+
+          collection - the name of the related foreign collection.
+        */ 
+
+        return request.post(`${baseUrl}?${searchParams.toString()}`,payload)
     }
 
     return {
