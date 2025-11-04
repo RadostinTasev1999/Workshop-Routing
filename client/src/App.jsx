@@ -1,5 +1,6 @@
 import './App.css'
 import {Routes, Route} from 'react-router'
+import { lazy, Suspense } from 'react'
 // Components
 import Home from './components/home/Home'
 import Header from './components/header/Header'
@@ -13,6 +14,8 @@ import Logout from './components/logout/Logout'
 import { UserProvider } from './providers/UserProvider'
 import AuthGuard from './components/guards/authGuard'
 import GuestGuard from './components/guards/guestGuard'
+
+const Admin = lazy(() => import('./components/admin/Admin'))
 
 function App() {
 
@@ -35,6 +38,13 @@ function App() {
         <Route element={<GuestGuard/>}>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+        </Route>
+        <Route path='/admin' element={(
+          <Suspense fallback={<p>Loading...</p>}>
+              <Admin />
+          </Suspense>
+        )}>
+
         </Route>
       </Routes>
     </main> 
