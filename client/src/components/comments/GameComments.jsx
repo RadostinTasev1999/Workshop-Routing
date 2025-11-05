@@ -1,22 +1,22 @@
-import styles from './GameComments.module.css'
+//import styles from './GameComments.module.css'
 
 export default function GameComments(
     { gameComments  }
 ){
 
-    console.log('Comments in Game Comments are:', gameComments)
+    console.log('Optimistic comments are:', gameComments)
     return (
         <>
         <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
                         {
-                              gameComments.length !== 0
+                              gameComments.length > 0
                                     ?
                             (
                                 gameComments.map(({_id,comment,pending,author}) => (
-                                    <li key={_id} className={`comment ${pending ? styles['comment-pending'] : ''}` .trim()}>
-                                        <p>{author.email}: {comment}</p>
+                                    <li key={_id} className="comment" style={{ backgroundColor: pending ? 'lightgray' : ''}} >
+                                        <p>Author's comment is : {comment}</p>
                                     </li>
                                 ))
                             )
