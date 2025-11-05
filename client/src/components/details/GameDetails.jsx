@@ -10,28 +10,47 @@ import useAuth from "../../hooks/useAuth"
 import { useComments } from "../../api/commentApi"
 //import { useOptimistic } from "react"
 import { useCreateComment } from "../../api/commentApi"
-//import { v4 as uuid } from 'uuid'
+import { useOptimistic } from "react"
+import { v4 as uuid } from 'uuid'
 
 
 
 export default function GameDetails(){
 
     let params = useParams()
-    const { _id: userId } = useAuth()
+    const { _id: userId, email } = useAuth()
     const navigate = useNavigate()
     const gameId = params.gameId
     const { game } = useGameId(gameId)
     const { deleteGame } = useDeleteGame()
     const { gameComments, addComment } = useComments(gameId) // current game comments on server
+    const [optimisticState, addOptimistic] = useOptimistic(gameComments)
 
     const { createComment } = useCreateComment()
     
      const onCreateComment = async(formData) => {
 
         const comment = formData.get('comment')
+
+        const optimisticComment = {
+            comment,
+            gameId,
+            _id: uuid(),
+            _ownerId: userId,
+            pending: true,
+            author: {
+                email
+            }
+        }
+
+        // update optimistic state:
+        addOptimistic((state) => [...state, optimisticComment])
+        // useOptimistic work only in the context of form actions
         
+        // send request to server
         const newComment = await createComment(comment,gameId) // Send post request to server with body {comment, gameId}
 
+        // update local state
         addComment(newComment)
         
         navigate(`/games/${gameId}`) // trigger navigation to Details compononent (this will trigger re-render)
@@ -60,7 +79,7 @@ export default function GameDetails(){
                     {game.summary}
                 </p>
 
-                <GameComments gameComments={gameComments} />
+                <GameComments gameComments={optimisticState} />
                 
             {
                 isOwner && (
