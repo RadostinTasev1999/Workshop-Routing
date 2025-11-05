@@ -43,6 +43,7 @@ export const useComments = (gameId) => {
             }
         }
         console.log('URL endpoint is:', `${baseUrl}?${searchParams.toString()}`)
+      
         request.get(`${baseUrl}?${searchParams.toString()}`,null,options)
             .then((response) => dispatch({type: 'GET_ALL', payload: response}))
     },[gameId, accessToken])
