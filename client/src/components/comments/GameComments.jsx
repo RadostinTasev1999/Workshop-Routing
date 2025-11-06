@@ -14,7 +14,7 @@ export default function GameComments(
                               gameComments.length > 0
                                     ?
                             (
-                                gameComments.map(({_id,comment,pending,author}) => (
+                                gameComments.map(({_id,comment,pending}) => (
                                     <li key={_id} className="comment" style={{ backgroundColor: pending ? 'lightgray' : ''}} >
                                         <p>Author's comment is : {comment}</p>
                                     </li>
