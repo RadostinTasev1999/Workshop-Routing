@@ -1,8 +1,22 @@
-export default function Admin() {
-    return (
+import React from 'react'
+import AdminComments from './admin-comments/AdminComments';
+import styles from '../admin/Admin.module.css'
+
+export default class Admin extends React.Component {
+
+    componentDidMount(){
+        console.log('On Component Mount')
+    }
+
+    render() {
+        return (
         <>
-        <h1>Admin Section</h1>
-        <p>This will be code splitted</p>
+        <section className={styles['admin-section']}>
+            <h1>Admin Panel</h1>
+            <AdminComments />
+        </section>
         </>
     );
+    }
 }
+
