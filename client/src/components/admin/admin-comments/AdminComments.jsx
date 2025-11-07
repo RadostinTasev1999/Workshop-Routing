@@ -1,6 +1,8 @@
 import { Component } from "react";
 import  request  from "../../../utils/requester";
 
+import CommentItem from './comment-item/CommentItem'
+
 const commentsUrl = 'http://localhost:3030/data/comments'
 
 export default class AdminComments extends Component {
@@ -25,10 +27,19 @@ export default class AdminComments extends Component {
         })
     }
 
+    deleteCommentHandler(commentId){
+        console.log('delete', commentId)
+
+        this.setState({
+            comments: this.state.comments.filter(comment => comment._id !== commentId)
+        })
+
+    }
+
     render() {
         return (
             <ul>
-                {this.state.comments.map(comment => <CommentItem key={comment._id} content={comment.comment}/>)}
+                {this.state.comments.map(comment => <CommentItem key={comment._id} id={comment._id} comment={comment.comment} onDelete={this.deleteCommentHandler}/>)}
             </ul>
         );
     }
