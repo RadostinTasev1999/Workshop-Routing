@@ -1,12 +1,17 @@
 import { Component } from "react";
-import request from '../../../../utils/requester'
+ import request from '../../../../utils/requester'
 
 export default class CommentItem extends Component {
 
     constructor(props){
         super(props)
+        /*
+        super:
+        - call other constructor methods that is instantiated
+        - used to access parent properties and methods from the child component
+        */
 
-        this.deleteClickHandler = this.deleteClickHandler.bind(this);
+        // this.deleteClickHandler = this.deleteClickHandler.bind(this);
     }
 
     async deleteClickHandler(){
