@@ -23,7 +23,7 @@ export default class AdminComments extends Component {
         const comments = await request.get(commentsUrl);
         console.log('Comments are:', comments)
         this.setState({ comments }, () => {
-            console.log(this.state)
+            console.log('Comments state is:', comments)
         })
     }
 
@@ -36,10 +36,31 @@ export default class AdminComments extends Component {
 
     }
 
+    // componentDidUpdate(){
+
+    // }
+
     render() {
         return (
             <ul>
-                {this.state.comments.map(comment => <CommentItem key={comment._id} id={comment._id} comment={comment.comment} onDelete={this.deleteCommentHandler}/>)}
+                {
+                        this.state.comments.length > 0
+                                ?
+                        (
+                        this.state.comments.map(comment => 
+                            <CommentItem 
+                                key={comment._id} 
+                                id={comment._id} 
+                                comment={comment.comment} 
+                                onDelete={this.deleteCommentHandler.bind(this)}/>)
+                        )
+                                :
+                        (
+                        <p>No comments yet!</p>
+                        )
+               
+                    
+                    }
             </ul>
         );
     }
