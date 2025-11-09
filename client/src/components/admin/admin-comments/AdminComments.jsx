@@ -41,6 +41,9 @@ export default class AdminComments extends Component {
     // }
 
     render() {
+        if (Math.random() < 0.5) {
+            throw new Error('Rendering bug!')
+        }
         return (
             <ul>
                 {
