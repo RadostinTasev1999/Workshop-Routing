@@ -31,3 +31,6 @@ export default class Admin extends Component {
     }
 }
 
+/*
+    https://legacy.reactjs.org/docs/context.html#contextconsumer
+*/
