@@ -1,14 +1,14 @@
 import { useEffect, useReducer } from "react"
 import useAuth from "../hooks/useAuth"
-// import request from "../utils/requester"
 
-import request from '../utils/requester'
 
 const baseUrl = 'http://localhost:3030/data/comments'
 
 function commentsReducer(state, action){
     // action = {type: 'GET_ALL', payload: response}
     // action = { type: 'ADD_COMMENT', payload: commentData }
+    // {type: 'GET_ALL', payload: response}
+    // {type: 'GET_ALL', payload: response}
     console.log('Action in commentsReducer is:', action)
 
     switch (action.type) {
@@ -24,12 +24,12 @@ function commentsReducer(state, action){
 
 
 export const useComments = (gameId) => {
-    //const { request } = useAuth()
-    // const [gameComments, setComments] = useState([])
+    
+    const { request } = useAuth()
 
     const [gameComments, dispatch] = useReducer(commentsReducer,[]) // reducer is a function which knows how to update the state
-    console.log('Game comments are:', gameComments)
-    const { accessToken } = useAuth()
+    console.log('Game comments are:', gameComments)     
+    
 
     useEffect(() => {
         const searchParams = new URLSearchParams({
@@ -37,16 +37,12 @@ export const useComments = (gameId) => {
             load: `author=_ownerId:users`
         })
 
-        const options = {
-            headers: {
-                'X-Authorization': accessToken
-            }
-        }
+        
         console.log('URL endpoint is:', `${baseUrl}?${searchParams.toString()}`)
       
-        request.get(`${baseUrl}?${searchParams.toString()}`,null,options)
+        request.get(`${baseUrl}?${searchParams.toString()}`,null)
             .then((response) => dispatch({type: 'GET_ALL', payload: response}))
-    },[gameId, accessToken])
+    },[gameId,request])
     
     return {
         gameComments,
