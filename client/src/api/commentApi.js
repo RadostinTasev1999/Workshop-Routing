@@ -28,6 +28,9 @@ export const useComments = (gameId) => {
     const { request } = useAuth()
 
     const [gameComments, dispatch] = useReducer(commentsReducer,[]) // reducer is a function which knows how to update the state
+    /*
+    The dispatch function that lets you update the state to a different value and trigger a re-render.
+    */
     console.log('Game comments are:', gameComments)     
     
 
@@ -42,7 +45,7 @@ export const useComments = (gameId) => {
       
         request.get(`${baseUrl}?${searchParams.toString()}`,null)
             .then((response) => dispatch({type: 'GET_ALL', payload: response}))
-    },[gameId,request])
+    },[gameId, request])
     
     return {
         gameComments,
