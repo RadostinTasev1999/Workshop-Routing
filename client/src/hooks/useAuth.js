@@ -1,16 +1,16 @@
-import { useUserContext } from "./useUserContext";
+//import { useUserContext } from "./useUserContext";
 import { UserContext } from "../contexts/UserContext"
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useCallback } from "react";
-import { request } from "../utils/requester";
+import request from "../utils/requester"
 
 export default function useAuth() {
 
-    const authData = useUserContext(UserContext);
+    const { accessToken, ...authData } = useContext(UserContext)
 
     const options = {
         headers:{
-            'X-Authorization': authData.accessToken
+            'X-Authorization': accessToken
         }
     }
 
@@ -19,14 +19,14 @@ export default function useAuth() {
         const authOptions = {
             ...options,
               headers:{
-                 'X-Authorization': authData.accessToken,
+                 'X-Authorization': accessToken,
                  ...options.headers
         }
     }
 
-    return request.baseRequest(method,url,data,authData.accessToken ? authOptions : options)
+    return request.baseRequest(method,url,data,accessToken ? authOptions : options)
 
-},[authData.accessToken])
+},[accessToken])
     
      
 // TODO: use UseMemo (https://react.dev/reference/react/useMemo)
