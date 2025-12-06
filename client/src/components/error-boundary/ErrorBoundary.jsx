@@ -15,7 +15,7 @@ export default class ErrorBoundary extends Component {
     
     static getDerivedStateFromError(error){
         console.log('getDerivedStateFromError')
-
+        // Update state so the next render will show the fallback UI
         return {
             hasError: true,
             errorMessage: error.message
@@ -23,9 +23,14 @@ export default class ErrorBoundary extends Component {
 
     }
 
-    componentDidCatch(error,errorInfo){
-        console.log('Component did catch')
-    }
+    /*
+        Use getDerivedStateFromError() to render a fallback UI after an error has been thrown.
+
+    */
+
+    // componentDidCatch(error,errorInfo){
+    //     console.log('Component did catch')
+    // }
 
     
 
