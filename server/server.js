@@ -1414,7 +1414,8 @@
 
     const server = http__default['default'].createServer(requestHandler(plugins, services));
 
-    const port = 3030;
+    const port = process.env.PORT || 3030;
+    // if we have port from environment variable, use this port, else use port 3030
 
     server.listen(port);
 
