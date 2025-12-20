@@ -1,6 +1,6 @@
 import request from '../utils/requester.js'
 
-const baseUrl = 'http://localhost:3030/jsonstore/games'
+const baseUrl = `${import.meta.env.VITE_APP_SERVER_URL}/jsonstore/games`
 
 
 export default {
