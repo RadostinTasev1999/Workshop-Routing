@@ -4,7 +4,7 @@ import { UserContext } from '../contexts/UserContext.jsx'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-const baseUrl = 'http://localhost:3030/data/games'
+const baseUrl = `${import.meta.env.VITE_APP_SERVER_URL}/data/games`
 
 
 // export default {
