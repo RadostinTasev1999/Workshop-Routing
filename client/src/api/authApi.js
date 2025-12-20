@@ -4,7 +4,7 @@ import { useRef } from 'react';
 //import { UserContext } from '../contexts/UserContext';
 import {useUserContext} from '../hooks/useUserContext';
 
-const baseUrl = 'http://localhost:3030/users'
+const baseUrl = `${import.meta.env.VITE_APP_SERVER_URL}/users`
 
 export const useLogin = () => {
 
